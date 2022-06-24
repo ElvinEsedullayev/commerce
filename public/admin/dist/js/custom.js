@@ -86,6 +86,36 @@ $(document).ready(function() {
     });
     //update category status end
 
+    //update product status start
+    $(document).on('click', '.updateProductStatus', function() {
+        var status = $(this).children('i').attr('status');
+        //alert(status);
+        var product_id = $(this).attr('product_id');
+        //alert(product_id);
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'post',
+            url: '/admin/update-product-status',
+            data: { status: status, product_id: product_id },
+            success: function(resp) {
+                //alert(resp);
+                if (resp['status'] == 0) {
+                    // $('#admin-' + admin_id).html("<i class='la la-bookmark' status='Inactive'></i>");
+                    $('#product-' + product_id).html("<i class='fa fa-toggle-off fa-lg' status='Inactive'></i>");
+                } else if (resp['status'] == 1) {
+                    // $('#admin-' + admin_id).html("<i class='la la-bookmark' status='Inactive'></i>");
+                    $('#product-' + product_id).html("<i class='fa fa-toggle-on fa-lg' status='Active'></i>");
+                }
+            },
+            error: function() {
+                alert(error);
+            }
+        });
+    });
+    //update product status end
+
     //append categories level 
     $('#section_id').change(function() {
         var section_id = $(this).val();

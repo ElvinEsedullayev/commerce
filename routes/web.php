@@ -46,6 +46,14 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function(
         //delete category
         Route::get('delete-category/{id}','AdminCategoryController@deleteCategory');
 
+        //admin categories 
+        Route::get('products','AdminProductController@product');
+        //update product status with ajax
+        Route::post('update-product-status','AdminProductController@updateProductStatus');
+        //add edit product
+        Route::match(['get','post'],'add-edit-product/{id?}','AdminProductController@addEditProduct');
+
+
         Route::get('logout','AdminAuthController@logout');
     });    
 });

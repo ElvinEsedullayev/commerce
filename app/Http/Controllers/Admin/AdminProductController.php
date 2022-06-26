@@ -47,6 +47,10 @@ class AdminProductController extends Controller
             $message = 'Product has been added successfully!';
         }else{
             $title = 'Edit Product';
+            $product = Product::find($id);
+            //$product = json_decode(json_encode($product),true);
+            //echo '<pre></pre>'; print_r($product);die;
+            $message = 'Product has been updated successfully!';
         }
 
         if($request->isMethod('post')){
@@ -184,6 +188,6 @@ class AdminProductController extends Controller
         $patternArray = array('Checked','Plain','Printed','Self','Solid');
         $fitArray = array('Regular','Slim');
         $occasionArray = array('Casual','Formal');
-        return view('admin.products.add_edit_product')->with(compact('title','fabricArray','sleeveArray','patternArray','fitArray','occasionArray','categories'));
+        return view('admin.products.add_edit_product')->with(compact('title','fabricArray','sleeveArray','patternArray','fitArray','occasionArray','categories','product'));
     }
 }

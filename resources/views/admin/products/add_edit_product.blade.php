@@ -159,8 +159,11 @@
                     <input type="file" class="form-control" id="exampleInputEmail1" value="" name="product_video">
                     @if(!empty($product['product_video']))
                     <br>
-                    <img src="{{url('front/images/categories/'.$product['product_video'])}}" width="100" alt="">
-                    <a href="Javascript:void(0)" module="product-image" moduleid="{{$product->id}}" class="confirmDelete">Delete Video</a>
+                    <div>
+                      <a target="_blank" href="{{url('front/videos/products/'.$product['product_video'])}}" download="" width="100" alt="">Download</a>
+                     &nbsp;|&nbsp;
+                    <a href="Javascript:void(0)" module="product-video" moduleid="{{$product->id}}" class="confirmDelete">Delete Video</a>
+                    </div> 
                     @endif
                   </div>
                    <div class="form-group">

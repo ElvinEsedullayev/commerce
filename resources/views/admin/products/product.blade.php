@@ -85,6 +85,7 @@
                       @endif
                     </td>
                     <td>
+                      <a href="{{url('admin/add-edit-product-attribute/'.$product['id'])}}"><i class="fa fa-plus fa-lg"></i></a>
                       <a href="{{url('admin/add-edit-product/'.$product['id'])}}"><i class="fa fa-edit fa-lg"></i></a>
                       <a href="Javascript:void(0)" module="product" moduleid="{{$product->id}}" class="confirmDelete"><i class="fa fa-trash fa-lg text-danger"></i></a> {{--href="{{url('admin/delete-category/'.$category['id'])}}" --}}
                     </td>

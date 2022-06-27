@@ -190,4 +190,50 @@ class AdminProductController extends Controller
         $occasionArray = array('Casual','Formal');
         return view('admin.products.add_edit_product')->with(compact('title','fabricArray','sleeveArray','patternArray','fitArray','occasionArray','categories','product'));
     }
+
+    public function productImageDelete($id)
+    {
+        $productImage = Product::select('product_image')->where('id',$id)->first();
+        $small_image_path = 'front/images/products/small/';
+        $medium_image_path = 'front/images/products/medium/';
+        $large_image_path = 'front/images/products/large/';
+        if(file_exists($small_image_path.$productImage->product_image)){
+            unlink($small_image_path.$productImage->product_image);
+        }
+        if(file_exists($medium_image_path.$productImage->product_image)){
+            unlink($medium_image_path.$productImage->product_image);
+        }
+        if(file_exists($large_image_path.$productImage->product_image)){
+            unlink($large_image_path.$productImage->product_image);
+        }
+        Product::where('id',$id)->update(['product_image' => '']);
+        $success = 'Product Image has been deleted successfully';
+        return redirect()->back()->with('success',$success);
+    }
+
+    public function productVideoDelete($id)
+    {
+        $productVideo = Product::select('product_video')->where('id',$id)->first();
+        $product_video_path = 'front/videos/products/';
+        if(file_exists($product_video_path.$productVideo->product_video)){
+            unlink($product_video_path.$productVideo->product_video);
+        }
+        Product::where('id',$id)->update(['product_video' => '']);
+        $success = 'Product Video has been deleted successfully';
+        return redirect()->back()->with('success',$success);
+    }
+
+    public function addEditProductAttribute(Request $request,$id)
+    {
+        $product = Product::select('id','product_name','product_code','product_color','product_price','product_image')->find($id);
+        $title = 'Add Edit Product Attribute';
+        //$product = json_decode(json_encode($product),true);
+        //echo '<pre></pre>';print_r($product);die;
+        if($request->isMethod('post')){
+            $data = $request->all();
+            $data = json_decode(json_encode($data),true);
+            echo '<pre></pre>';print_r($data);die;
+        }
+        return view('admin.attributes.add_edit_attribute')->with(compact('product','title'));
+    }
 }

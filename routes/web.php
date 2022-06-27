@@ -52,6 +52,12 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function(
         Route::post('update-product-status','AdminProductController@updateProductStatus');
         //add edit product
         Route::match(['get','post'],'add-edit-product/{id?}','AdminProductController@addEditProduct');
+        //category images delete
+        Route::get('delete-product-image/{id}','AdminProductController@productImageDelete');
+        //category images delete
+        Route::get('delete-product-video/{id}','AdminProductController@productVideoDelete');
+        //add edit product attribute
+        Route::match(['get','post'],'add-edit-product-attribute/{id?}','AdminProductController@addEditProductAttribute');
 
 
         Route::get('logout','AdminAuthController@logout');

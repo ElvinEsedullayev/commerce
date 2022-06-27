@@ -58,6 +58,12 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function(
         Route::get('delete-product-video/{id}','AdminProductController@productVideoDelete');
         //add edit product attribute
         Route::match(['get','post'],'add-edit-product-attribute/{id?}','AdminProductController@addEditProductAttribute');
+        //update attribute
+        Route::post('attribute-edit/{id}','AdminProductController@updateAttribute');
+        //update attribute status with ajax
+        Route::post('update-attribute-status','AdminProductController@updateAttributeStatus');
+        //attribute delete
+        Route::get('delete-attribute/{id}','AdminProductController@attributeDelete');
 
 
         Route::get('logout','AdminAuthController@logout');

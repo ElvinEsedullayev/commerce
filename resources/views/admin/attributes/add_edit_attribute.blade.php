@@ -61,7 +61,7 @@
     </div>
 @endif
               <!-- form start -->
-              <form  method="POST" enctype="multipart/form-data">
+              <form action="{{url('admin/add-edit-product-attribute/'.$product->id)}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="card-body">    
                   <div class="form-group">
@@ -110,22 +110,90 @@
               </form>
             </div>
             <!-- /.card -->
-  
-
+            
+        </div>
+          <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Attributes</h3>
+                <a href="{{url('admin/add-edit-product')}}" class="btn btn-success float-right"><i class="fas fa-plus"></i> Yeni</a><br><br>
+              </div>
+              <!-- /.card-header -->
+              @if(Session::has('success'))
+      <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+      <strong>Success!</strong> {{Session::get('success')}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+      @endif
+              <div class="card-body">
+                <form action="{{url('admin/attribute-edit/'.$product['id'])}}" method="POST">
+                @csrf
+                <table id="attributes" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Size</th>
+                    <th>Sku</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Status</th>
+                   <th>Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($product['attributes'] as $attribute) 
+                    <input style="display: none" type="text" name="attributeId[]" value="{{$attribute['id']}}">
+                  <tr>
+                    <td>{{$attribute->id}}</td>
+                   
+                    <td>{{$attribute->size}}</td>
+                    <td>{{$attribute->sku}}</td>
+                    <td>
+                    <input style="width: 70px;" type="number" name="price[]" value="{{$attribute['price']}}"></td>     
+                    <td>
+                    <input style="width: 70px;" type="number" name="stock[]" value="{{$attribute['stock']}}"></td>
+                    <td>
+                      @if($attribute->status == 1)
+                      <a href="Javascript:void(0)" class="updateAttributeStatus" id="attribute-{{$attribute->id}}" attribute_id="{{$attribute->id}}"><i class="fa fa-toggle-on fa-lg"  status="Active"></i></a>
+                      @else
+                      <a href="Javascript:void(0)" class="updateAttributeStatus" id="attribute-{{$attribute->id}}" attribute_id="{{$attribute->id}}"><i class="fa fa-toggle-off fa-lg"  status="Inactive"></i></a>
+                      @endif
+                    </td>
+                    <td>
+                      <a href="Javascript:void(0)" module="attribute" moduleid="{{$attribute->id}}" class="confirmDelete"><i class="fa fa-trash fa-lg text-primary"></i></a> {{--href="{{url('admin/delete-category/'.$category['id'])}}" --}}
+                    </td>
+                  </tr>
+                  @endforeach
+             
+                  </tbody>
+             
+                </table>
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-info">Update Attribute</button>
+                </div>
+                </form>
+                
+              </div>
+              <!-- /.card-body -->
+              
           </div>
           <!--/.col (left) -->
 
-        </div>
-        
 @endsection  
 @section('js')
-<!-- Select2 -->
-<script src="{{url('admin/plugins/select2/js/select2.full.min.js')}}"></script>
+<script src="{{url('admin/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{url('admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{url('admin/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{url('admin/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+<script src="{{url('admin/plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
+<script src="{{url('admin/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
+<script src="{{url('admin/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
+<script src="{{url('admin/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
 <script>
- 
-    //Initialize Select2 Elements
-    $('.select2').select2();
-  
-
-  </script>
+  $(function () {
+    $("#attributes").DataTable();
+    
+  });
+</script>
 @endsection      

@@ -64,6 +64,13 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function(
         Route::post('update-attribute-status','AdminProductController@updateAttributeStatus');
         //attribute delete
         Route::get('delete-attribute/{id}','AdminProductController@attributeDelete');
+        //add edit product attribute
+        Route::match(['get','post'],'add-edit-product-images/{id?}','AdminProductController@addEditProductImages');
+        //update images status with ajax
+        Route::post('update-image-status','AdminProductController@updateImageStatus');
+        //image delete
+        Route::get('delete-image/{id}','AdminProductController@imageDelete');
+        
 
 
         Route::get('logout','AdminAuthController@logout');

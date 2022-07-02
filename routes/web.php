@@ -73,6 +73,18 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function(
         
 
 
+
+        //admin brands 
+        Route::get('brands','AdminBrandController@brand');
+        //update brand status with ajax
+        Route::post('update-brand-status','AdminBrandController@updateBrandStatus');
+        //add edit brand
+        Route::match(['get','post'],'add-edit-brand/{id?}','AdminBrandController@addEditBrand');
+        //brand delete
+        Route::get('delete-brand/{id}','AdminBrandController@brandDelete');
+        
+
+
         Route::get('logout','AdminAuthController@logout');
     });    
 });

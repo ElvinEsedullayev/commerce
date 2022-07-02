@@ -147,6 +147,36 @@ $(document).ready(function() {
     });
     //update images status end
 
+    //update images status start
+    $(document).on('click', '.updateBrandStatus', function() {
+        var status = $(this).children('i').attr('status');
+        //alert(status);
+        var brand_id = $(this).attr('brand_id');
+        //alert(brand_id);
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'post',
+            url: '/admin/update-brand-status',
+            data: { status: status, brand_id: brand_id },
+            success: function(resp) {
+                //alert(resp);
+                if (resp['status'] == 0) {
+                    // $('#admin-' + admin_id).html("<i class='la la-bookmark' status='Inactive'></i>");
+                    $('#brand-' + brand_id).html("<i class='fa fa-toggle-off fa-lg' status='Inactive'></i>");
+                } else if (resp['status'] == 1) {
+                    // $('#admin-' + admin_id).html("<i class='la la-bookmark' status='Inactive'></i>");
+                    $('#brand-' + brand_id).html("<i class='fa fa-toggle-on fa-lg' status='Active'></i>");
+                }
+            },
+            error: function() {
+                alert(error);
+            }
+        });
+    });
+    //update images status end
+
     //update product status start
     $(document).on('click', '.updateProductStatus', function() {
         var status = $(this).children('i').attr('status');

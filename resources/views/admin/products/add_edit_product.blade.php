@@ -85,6 +85,15 @@
                     </select>
                   </div>
                   <div class="form-group">
+                    <label for="">Select Brand</label>
+                    <select name="brand_id" id="fabric" class="form-control">
+                      <option value="">Select Brand</option>
+                      @foreach($brands as $brand)
+                      <option value="{{$brand['id']}}" @if(!empty($product['brand_id'] && $product['brand_id'] ==  $brand['id'])) selected @endif>{{$brand['name']}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  <div class="form-group">
                     <label for="">Select Fabric</label>
                     <select name="fabric" id="fabric" class="form-control">
                       <option value="">Select Fabric</option>

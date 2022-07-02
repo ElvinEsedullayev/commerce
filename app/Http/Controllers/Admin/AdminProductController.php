@@ -9,6 +9,7 @@ use App\Models\ProductsAttribute;
 use App\Models\ProductsImages;
 use App\Models\Section;
 use App\Models\Category;
+use App\Models\Brand;
 use Session;
 use Image;
 class AdminProductController extends Controller
@@ -181,6 +182,7 @@ class AdminProductController extends Controller
                 $categoryDetails = Category::find($data['category_id']);
                 $product->section_id = $categoryDetails['section_id'];
                 $product->category_id = $data['category_id'];
+                $product->brand_id = $data['brand_id'];
                 $product->product_name = $data['product_name'];
                 $product->product_code = $data['product_code'];
                 // $product->product_video = 'video';
@@ -209,13 +211,15 @@ class AdminProductController extends Controller
         $categories = Section::with('category')->get()->toArray();
         //echo '<pre></pre>'; print_r($categories);die;
 
+        //get brand
+        $brands = Brand::where('status',1)->get();
         //filter arrays
         $fabricArray = array('Cotton','Polyester','Wool');
         $sleeveArray = array('Full Sleeve','Half Sleeve','Short Sleeve','Sleevess');
         $patternArray = array('Checked','Plain','Printed','Self','Solid');
         $fitArray = array('Regular','Slim');
         $occasionArray = array('Casual','Formal');
-        return view('admin.products.add_edit_product')->with(compact('title','fabricArray','sleeveArray','patternArray','fitArray','occasionArray','categories','product'));
+        return view('admin.products.add_edit_product')->with(compact('title','fabricArray','sleeveArray','patternArray','fitArray','occasionArray','categories','product','brands'));
     }
 
     public function productImageDelete($id)

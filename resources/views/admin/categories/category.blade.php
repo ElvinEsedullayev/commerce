@@ -63,8 +63,9 @@
                     @endif
                   <tr>
                     <td>{{$category->id}}</td>
-                    <td>{{$parent_category}}</td>
                     <td>{{$category->category_name}}</td>
+                    <td>{{$parent_category}}</td>
+                    
                     <td>{{$category->section->name}}</td>
                     <td>
                       @if($category->status == 1)

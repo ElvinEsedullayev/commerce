@@ -10,6 +10,6 @@ class FrontHomeController extends Controller
     public function home()
     {
         $index_page = 'index';
-        return view('front.home.index');
+        return view('front.home.index')->with(compact('index_page'));
     }
 }

@@ -4,9 +4,9 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
 
@@ -89,9 +89,7 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function(
     });    
 });
 Route::namespace('App\Http\Controllers\Front')->group(function(){
-    Route::get('/',function(){
-        return view('front.layouts.master');
-    });
+    Route::get('/','FrontHomeController@home');
 });
 
 

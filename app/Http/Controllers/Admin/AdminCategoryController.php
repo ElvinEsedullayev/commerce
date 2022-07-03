@@ -44,7 +44,7 @@ class AdminCategoryController extends Controller
             $message = 'Category has been added successfully';
         }else{
             $title = 'Edit Category';
-            // $getCategory = Category::where('id',$id)->first();
+             //$category = Category::where('id',$id)->first();
             $category = Category::find($id);
             $getSubategory = Category::with('subcategories')->where(['parent_id' => 0, 'section_id' => $category['section_id']])->get();
             //$getCategory = json_decode(json_encode($getSubategory),true);
@@ -119,10 +119,10 @@ class AdminCategoryController extends Controller
         if($request->ajax()){
             $data = $request->all();
             //echo '<pre></pre>'; print_r($data);die;
-            $categories = Category::with('subcategories')->where(['parent_id' => 0,'section_id' => $data['section_id']])->get();
-            //$categories = json_decode(json_encode($categories),true);
-            //echo '<pre></pre>'; print_r($categories);die;
-            return view('admin.categories.append_category_level')->with(compact('categories'));
+            $getSubategory = Category::with('subcategories')->where(['section_id' => $data['section_id'],'parent_id' => 0,'status' => 1])->get()->toArray();
+            $getSubategory = json_decode(json_encode($getSubategory),true);
+            //echo '<pre></pre>'; print_r($getSubategory);die;
+            return view('admin.categories.append_category_level')->with(compact('getSubategory'));
         }
     }
 

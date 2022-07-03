@@ -208,7 +208,7 @@ $(document).ready(function() {
     //update product status end
 
     //append categories level 
-    $('#section_id').change(function() {
+    $("#section_id").change(function() {
         var section_id = $(this).val();
         //alert(section_id);
         $.ajax({
@@ -219,6 +219,7 @@ $(document).ready(function() {
             url: '/admin/append-categories-level',
             data: { section_id: section_id },
             success: function(resp) {
+                //alert(section_id);
                 $('#appendCategoryLevel').html(resp);
             },
             error: function(resp) {
@@ -229,6 +230,7 @@ $(document).ready(function() {
     //append categories level end
 
     //sweetalert in jquery start
+    // $(document).on('click', '.confirmDelete', function() { //eger paginatonda bu islemese asagidaki ile deyis
     $('.confirmDelete').click(function() {
         var module = $(this).attr('module');
         var moduleid = $(this).attr('moduleid');

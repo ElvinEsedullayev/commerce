@@ -8,6 +8,8 @@
     </script>
     <!-- Bootstrap 4 -->
     <script src="{{url('admin/plugins/bootstrap/js/bootstrap.bundle.min.')}}"></script>
+    <!-- Select2 -->
+    <script src="{{url('admin/plugins/select2/js/select2.full.min.js')}}"></script>
     <!-- ChartJS -->
     <script src="{{url('admin/plugins/chart.js/Chart.min.js')}}"></script>
     <!-- Sparkline -->
@@ -34,6 +36,12 @@
     <script src="{{url('admin/dist/js/pages/dashboard.js')}}"></script>
     <!-- custom js -->
     <script src="{{url('admin/dist/js/custom.js')}}"></script>
-    {{-- sweetalert --}}
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <script>
+ 
+    //Initialize Select2 Elements
+    $('.select2').select2();
+  
+
+  </script>
     @yield('js')

@@ -73,7 +73,7 @@
                     <select name="section_id" id="section_id" class="form-control">
                       <option value="">Select</option>
                       @foreach($sections as $section)
-                      <option value="{{$section->id}}" @if(!empty($category['section_id'] && $category['section_id'] == $section->id)) selected @endif>{{$section->name}}</option>
+                      <option value="{{$section->id}}" @if(!empty($category->section_id) && $category->section_id == $section->id) selected @endif>{{$section->name}}</option>
                       @endforeach
                     </select>
                   </div>
@@ -130,14 +130,4 @@
         </div>
         
 @endsection  
-@section('js')
-<!-- Select2 -->
-<script src="{{url('admin/plugins/select2/js/select2.full.min.js')}}"></script>
-<script>
  
-    //Initialize Select2 Elements
-    $('.select2').select2();
-  
-
-  </script>
-@endsection      

@@ -30,4 +30,6 @@
     <!-- Select2 -->
   <link rel="stylesheet" href="{{url('admin/plugins/select2/css/select2.min.css')}}">
   {{-- <link rel="stylesheet" href="{{url('admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}"> --}}
+  {{-- sweetalert --}}
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>

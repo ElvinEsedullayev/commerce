@@ -83,7 +83,7 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function(
         //brand delete
         Route::get('delete-brand/{id}','AdminBrandController@brandDelete');
         
-
+        
 
         Route::get('logout','AdminAuthController@logout');
     });    

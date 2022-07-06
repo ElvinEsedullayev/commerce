@@ -30,8 +30,8 @@
 
           <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Products</h3>
-                <a href="{{url('admin/add-edit-product')}}" class="btn btn-success float-right"><i class="fas fa-plus"></i> Yeni</a><br><br>
+                <h3 class="card-title">Banner</h3>
+                <a href="{{url('admin/add-edit-banner')}}" class="btn btn-success float-right"><i class="fas fa-plus"></i> Yeni</a><br><br>
               </div>
               <!-- /.card-header -->
               @if(Session::has('success'))
@@ -43,53 +43,47 @@
     </div>
       @endif
               <div class="card-body">
-                <table id="products" class="table table-bordered table-striped">
+                <table id="banners" class="table table-bordered table-striped">
                   <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Product Name</th>
-                    <th>Category Name</th>
-                    <th>Section</th>
+                    <th>Banner Title</th>
+                    <th>Banner Link</th>
                     <th>Product Image</th>
-                    <th>Product Color</th>
-                    <th>Product Code</th>
                     <th>Status</th>
                    <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
-                    @foreach($products as $product)
+                    @foreach($banners as $banner)
                   
                   <tr>
-                    <td>{{$product->id}}</td>
+                    <td>{{$banner['id']}}</td>
                    
-                    <td>{{$product->product_name}}</td>
-                    <td>{{$product->category->category_name}}</td>
-                    <td>{{$product->section->name}}</td>
+                    <td>{{$banner['title']}}</td>
+                    <td>{{$banner['link']}}</td>
                     <td>
                       @php
-                          $product_image_path = 'front/images/products/small/'.$product->product_image;
+                          $banner_image_path = 'front/images/banners/'.$banner['banner_image'];
                       @endphp
-                      @if(!empty($product['product_image']) && file_exists($product_image_path))
-                      <img src="{{url('front/images/products/small/'.$product['product_image'])}}" width="100" alt="">
+                      @if(!empty($banner['banner_image']) && file_exists($banner_image_path))
+                      <img src="{{url('front/images/banners/'.$banner['banner_image'])}}" width="100" alt="">
                       @else
-                      <img src="{{url('front/images/products/large/no-image.png')}}" width="100" alt="">
+                      <img src="{{url('front/images/banners/no-image.png')}}" width="100" alt="">
                       @endif
                     </td>
-                    <td>{{$product->product_color}}</td>
-                    <td>{{$product->product_code}}</td>
                     <td>
-                      @if($product->status == 1)
-                      <a href="Javascript:void(0)" class="updateProductStatus" id="product-{{$product->id}}" product_id="{{$product->id}}"><i class="fa fa-toggle-on fa-lg"  status="Active"></i></a>
+                      @if($banner['status'] == 1)
+                      <a href="Javascript:void(0)" class="updateBannerStatus" id="banner-{{$banner['id']}}" banner_id="{{$banner['id']}}"><i class="fa fa-toggle-on fa-lg"  status="Active"></i></a>
                       @else
-                      <a href="Javascript:void(0)" class="updateProductStatus" id="product-{{$product->id}}" product_id="{{$product->id}}"><i class="fa fa-toggle-off fa-lg"  status="Inactive"></i></a>
+                      <a href="Javascript:void(0)" class="updateBannerStatus" id="banner-{{$banner['id']}}" banner_id="{{$banner['id']}}"><i class="fa fa-toggle-off fa-lg"  status="Inactive"></i></a>
                       @endif
                     </td>
                     <td style="width: 100px;">
-                      <a href="{{url('admin/add-edit-product-attribute/'.$product['id'])}}"><i class="fa fa-plus fa-lg"></i></a>
-                      <a href="{{url('admin/add-edit-product/'.$product['id'])}}"><i class="fa fa-edit fa-lg"></i></a>
-                      <a href="{{url('admin/add-edit-product-images/'.$product['id'])}}"><i class="fa fa-images fa-lg"></i></a>
-                      <a href="Javascript:void(0)" module="product" moduleid="{{$product->id}}" class="confirmDelete"><i class="fa fa-trash fa-lg text-primary"></i></a> {{--href="{{url('admin/delete-category/'.$category['id'])}}" --}}
+         
+                      <a href="{{url('admin/add-edit-banner/'.$banner['id'])}}"><i class="fa fa-edit fa-lg"></i></a>
+    
+                      <a href="Javascript:void(0)" module="banner" moduleid="{{$banner['id']}}" class="confirmDelete"><i class="fa fa-trash fa-lg text-primary"></i></a> {{--href="{{url('admin/delete-category/'.$category['id'])}}" --}}
                     </td>
                   </tr>
                   @endforeach
@@ -114,7 +108,7 @@
 <script src="{{url('admin/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
 <script>
   $(function () {
-    $("#products").DataTable();
+    $("#banners").DataTable();
     
   });
 </script>

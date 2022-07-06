@@ -80,7 +80,7 @@
                         </li>
 
                          <li class="nav-item menu-open">
-                            @if(Session::get('page') ==  'categories' or Session::get('page') == 'sections' or Session::get('page') == 'products' or Session::get('page') == 'brands')
+                            @if(Session::get('page') ==  'categories' or Session::get('page') == 'sections' or Session::get('page') == 'products' or Session::get('page') == 'brands' or Session::get('page') == 'banners')
                              @php $active = 'active'; @endphp
                              @else
                               @php $active = ''; @endphp
@@ -115,7 +115,17 @@
                                         <p>Brands</p>
                                     </a>
                                 </li>
-
+                                <li class="nav-item">
+                                 @if(Session::get('page') ==  'banners')
+                             @php $active = 'active'; @endphp
+                             @else
+                              @php $active = ''; @endphp
+                              @endif
+                                    <a href="{{url('admin/banners')}}" class="nav-link {{$active}}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Banners</p>
+                                    </a>
+                                </li>
                                   <li class="nav-item">
                                  @if(Session::get('page') ==  'categories')
                              @php $active = 'active'; @endphp

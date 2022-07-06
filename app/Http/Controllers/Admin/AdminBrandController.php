@@ -65,4 +65,5 @@ class AdminBrandController extends Controller
         $success = 'Brand has been deleted successfully';
         return redirect()->back()->with('success',$success);
     }
+    
 }

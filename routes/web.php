@@ -12,6 +12,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+
 Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function(){
     //home login
     Route::match(['get','post'],'/login','AdminAuthController@index');
@@ -45,7 +46,7 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function(
         Route::get('delete-category-image/{id}','AdminCategoryController@categoryImageDelete');
         //delete category
         Route::get('delete-category/{id}','AdminCategoryController@deleteCategory');
-
+        
         //admin categories 
         Route::get('products','AdminProductController@product');
         //update product status with ajax
@@ -70,8 +71,6 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function(
         Route::post('update-image-status','AdminProductController@updateImageStatus');
         //image delete
         Route::get('delete-image/{id}','AdminProductController@imageDelete');
-        
-
 
 
         //admin brands 
@@ -83,13 +82,24 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function(
         //brand delete
         Route::get('delete-brand/{id}','AdminBrandController@brandDelete');
         
+        //banners
+        Route::get('banners','AdminBannerController@banner');
+        ############# Update banner status ############
+        Route::post('update-banner-status','AdminBannerController@updateBannerStatus');
+        //delete banner
+        Route::get('delete-banner/{id}','AdminBannerController@deleteBanner');
+        //add edit banner
+        Route::match(['get','post'],'add-edit-banner/{id?}','AdminBannerController@addEditBanner');
         
 
         Route::get('logout','AdminAuthController@logout');
     });    
 });
+
+
 Route::namespace('App\Http\Controllers\Front')->group(function(){
     Route::get('/','FrontHomeController@home');
+    
 });
 
 

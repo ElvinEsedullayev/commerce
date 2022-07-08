@@ -99,7 +99,8 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function(
 
 Route::namespace('App\Http\Controllers\Front')->group(function(){
     Route::get('/','FrontHomeController@home');
-    
+    //listing page
+    Route::get('/{url}','FrontProductController@listing');
 });
 
 

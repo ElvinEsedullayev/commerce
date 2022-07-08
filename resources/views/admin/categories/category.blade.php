@@ -50,6 +50,7 @@
                     <th>Category</th>
                     <th>Parent Category</th>
                     <th>Section</th>
+                    <th>Url</th>
                     <th>Status</th>
                    <th>Action</th>
                   </tr>
@@ -67,6 +68,7 @@
                     <td>{{$parent_category}}</td>
                     
                     <td>{{$category->section->name}}</td>
+                    <td>{{$category->url}}</td>
                     <td>
                       @if($category->status == 1)
                       <a href="Javascript:void(0)" class="updateCategoryStatus" id="category-{{$category->id}}" category_id="{{$category->id}}"><i class="fa fa-toggle-on fa-lg"  status="Active"></i></a>

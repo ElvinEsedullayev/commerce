@@ -99,7 +99,7 @@
                   </div>
                    <div class="form-group">
                     <label for="">Description</label>
-                    <textarea name="description" id="" cols="30" rows="5" class="form-control">@if(!empty($category['discount'])) {{$category['discount']}} @else {{old('description')}}  @endif</textarea>
+                    <textarea name="description" id="" cols="30" rows="5" class="form-control">@if(!empty($category['description'])) {{$category['description']}} @else {{old('description')}}  @endif</textarea>
                   </div>
                   <div class="form-group">
                     <label for="">Meta Title</label>

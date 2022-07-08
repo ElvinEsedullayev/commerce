@@ -25,17 +25,17 @@ $sections = Section::sections();
 		        <a class="brand" href="#">Stack Developers</a>
 		        <div class="nav-collapse">
 		          <ul class="nav">
-		            <li class="active"><a href="#">Home</a></li>
+		            <li class="active"><a href="{{url('/')}}">Home</a></li>
 								@foreach($sections as $section)
 								@if(count($section['category']) > 0)
 		            <li class="dropdown">
-		              <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{$section['name']}} <b class="caret"></b></a>
+		              <a href="" class="dropdown-toggle" data-toggle="dropdown">{{$section['name']}} <b class="caret"></b></a>
 		              <ul class="dropdown-menu">
 										@foreach($section['category'] as $category)
 		              	<li class="divider"></li>
-		                <li class="nav-header"><a href="#">{{$category['category_name']}}</a></li>
+		                <li class="nav-header"><a href="{{url($category['url'])}}">{{$category['category_name']}}</a></li>
 										@foreach($category['subcategories'] as $subcategory)
-		                <li><a href="#">{{$subcategory['category_name']}}</a></li>
+		                <li><a href="{{url($subcategory['url'])}}">{{$subcategory['category_name']}}</a></li>
 		                @endforeach
 		               @endforeach
 		              </ul>

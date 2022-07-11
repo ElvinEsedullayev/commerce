@@ -5,3 +5,4 @@
 
 <script src="{{url('front/js/front.js')}}"></script>
 <script src="{{url('front/js/jquery.lightbox-0.5.js')}}"></script>
+<script src="{{url('front/js/front_custom.js')}}"></script>

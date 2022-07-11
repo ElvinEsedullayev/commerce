@@ -50,9 +50,9 @@
 										$product_image_path = 'front/images/products/small/'.$product['product_image'];
 								@endphp
 								@if(!empty($product['product_image']) && file_exists($product_image_path))
-								<img width="160" src="{{url('front/images/products/small/'.$product['product_image'])}}" alt=""/>
+								<img style="width: 200px; height: 250px;" src="{{url('front/images/products/small/'.$product['product_image'])}}" alt=""/>
 								@else 
-								<img width="160" src="{{url('front/images/products/small/no-image.png')}}" alt=""/>
+								<img style="width: 200px; height: 250px;" src="{{url('front/images/products/large/no-image.png')}}" alt=""/>
 								@endif
 							</a>
 							<div class="caption">

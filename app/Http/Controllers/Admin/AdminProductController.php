@@ -214,11 +214,17 @@ class AdminProductController extends Controller
         //get brand
         $brands = Brand::where('status',1)->get();
         //filter arrays
-        $fabricArray = array('Cotton','Polyester','Wool');
-        $sleeveArray = array('Full Sleeve','Half Sleeve','Short Sleeve','Sleevess');
-        $patternArray = array('Checked','Plain','Printed','Self','Solid');
-        $fitArray = array('Regular','Slim');
-        $occasionArray = array('Casual','Formal');
+        // $fabricArray = array('Cotton','Polyester','Wool');
+        // $sleeveArray = array('Full Sleeve','Half Sleeve','Short Sleeve','Sleevess');
+        // $patternArray = array('Checked','Plain','Printed','Self','Solid');
+        // $fitArray = array('Regular','Slim');
+        // $occasionArray = array('Casual','Formal');
+        $productFilters = Product::productFilters();
+        $fabricArray = $productFilters['fabricArray'];
+        $sleeveArray = $productFilters['sleeveArray'];
+        $patternArray = $productFilters['patternArray'];
+        $fitArray = $productFilters['fitArray'];
+        $occasionArray = $productFilters['occasionArray'];
         return view('admin.products.add_edit_product')->with(compact('title','fabricArray','sleeveArray','patternArray','fitArray','occasionArray','categories','product','brands'));
     }
 

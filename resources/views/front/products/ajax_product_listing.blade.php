@@ -5,13 +5,9 @@
 							<div class="thumbnail">
 								<a href="product_details.html">
 									@if(isset($product['product_image']))
-									@php
-															$product_image_path = 'front/images/products/small/'.$product['product_image'];
-													@endphp
+									@php $product_image_path = 'front/images/products/small/'.$product['product_image']; @endphp
 								@else 
-									@php
-															$product_image_path = '';
-													@endphp
+									@php $product_image_path = ''; @endphp
 								@endif
                   	{{-- @php
 															$product_image_path = 'front/images/products/small/'.$product['product_image'];
@@ -31,7 +27,11 @@
 									<h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">Rs.{{$product['product_price']}}</a></h4>
 									<p>
 										{{-- {{$product['brand']['name']}} --}}
-										{{$product['fabric']}}
+										{{$product['fabric']}} <br>
+										{{$product['sleeve']}} <br>
+										{{$product['pattern']}} <br>
+										{{$product['fit']}} <br>
+										{{$product['occasion']}} <br>
 									</p>
 								</div>
 							</div>

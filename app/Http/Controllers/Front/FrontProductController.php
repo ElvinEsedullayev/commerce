@@ -30,6 +30,22 @@ class FrontProductController extends Controller
                 if(isset($data['fabric']) && !empty($data['fabric'])){
                     $categoryProduct = Product::whereIn('products.fabric',$data['fabric']);
                 }
+                //if sleeve filter selected
+                if(isset($data['sleeve']) && !empty($data['sleeve'])){
+                    $categoryProduct = Product::whereIn('products.sleeve',$data['sleeve']);
+                }
+                //if pattern filter selected
+                if(isset($data['pattern']) && !empty($data['pattern'])){
+                    $categoryProduct = Product::whereIn('products.pattern',$data['pattern']);
+                }
+                //if fit filter selected
+                if(isset($data['fit']) && !empty($data['fit'])){
+                    $categoryProduct = Product::whereIn('products.fit',$data['fit']);
+                }
+                //if occasion filter selected
+                if(isset($data['occasion']) && !empty($data['occasion'])){
+                    $categoryProduct = Product::whereIn('products.occasion',$data['occasion']);
+                }
 
                 //if  sort option selected by user
                 if(isset($data['sort']) && !empty($data['sort'])){

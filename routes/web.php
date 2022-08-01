@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Models\Category;
 
 
 Route::get('/', function () {
@@ -99,8 +99,15 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function(
 
 Route::namespace('App\Http\Controllers\Front')->group(function(){
     Route::get('/','FrontHomeController@home');
+    //get category url
+    $catUrl = Category::select('url')->where('status',1)->get()->pluck('url')->toArray(); 
+    //dd($catUrl);
+    foreach($catUrl as $url){
+        Route::get('/'.$url,'FrontProductController@listing');
+    }
+    Route::get('/product/{id}','FrontProductController@detail');
     //listing page
-    Route::get('/{url}','FrontProductController@listing');
+    //Route::get('/{url}','FrontProductController@listing');
 });
 
 

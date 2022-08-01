@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductsAttribute;
+use Illuminate\Support\Facades\Route;
 //use Illuminate\Pagination\Paginator;
 //use App\CustomClasses\ColectionPaginate;
 class FrontProductController extends Controller
 {
-    public function listing($url,Request $request)
+    public function listing(Request $request)
     {
         if($request->ajax()){
             $data = $request->all();
@@ -72,6 +74,7 @@ class FrontProductController extends Controller
                 abort(404);
             }
         }else{
+            $url = Route::getFacadeRoot()->current()->uri();
             $categoryCount = Category::where(['url' => $url,'status' => 1])->count();
             if($categoryCount > 0){
                 //echo 'category exists';
@@ -96,5 +99,13 @@ class FrontProductController extends Controller
             }
         }
         
+    }
+
+    public function detail($id)
+    {
+        $productDetail = Product::with('category','brand','attributes','images')->find($id)->toArray();
+        //dd($productDetail);
+        $total_stock = ProductsAttribute::where('product_id',$id)->sum('stock');
+        return view('front.products.detail')->with(compact('productDetail','total_stock'));
     }
 }

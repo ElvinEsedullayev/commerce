@@ -27,11 +27,11 @@
 									<h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">Rs.{{$product['product_price']}}</a></h4>
 									<p>
 										{{-- {{$product['brand']['name']}} --}}
-										{{$product['fabric']}} <br>
+										{{-- {{$product['fabric']}} <br>
 										{{$product['sleeve']}} <br>
 										{{$product['pattern']}} <br>
 										{{$product['fit']}} <br>
-										{{$product['occasion']}} <br>
+										{{$product['occasion']}} <br> --}}
 									</p>
 								</div>
 							</div>

@@ -13,7 +13,7 @@
 										<li class="span3">
 											<div class="thumbnail">
 												<i class="tag"></i>
-												<a href="product_details.html">
+												<a href="{{url('product/'.$item['id'])}}">
 													@php
 															$product_image_path = 'front/images/products/small/'.$item['product_image'];
 													@endphp

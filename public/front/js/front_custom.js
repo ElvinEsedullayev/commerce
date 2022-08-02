@@ -132,6 +132,10 @@ $(document).ready(function() {
         var size = $(this).val();
         //alert(size);
         var product_id = $(this).attr('product-id');
+        if(size == ''){
+            alert('Please select size!');
+            return false;
+        }
         //alert(product_id);
         $.ajax({
             headers: {

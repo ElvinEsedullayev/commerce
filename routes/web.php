@@ -108,6 +108,9 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     Route::get('/product/{id}','FrontProductController@detail');
     //listing page
     //Route::get('/{url}','FrontProductController@listing');
+
+    //get product price
+    Route::post('/get-product-price','FrontProductController@productPrice');
 });
 
 

@@ -108,4 +108,14 @@ class FrontProductController extends Controller
         $total_stock = ProductsAttribute::where('product_id',$id)->sum('stock');
         return view('front.products.detail')->with(compact('productDetail','total_stock'));
     }
+
+    public function productPrice(Request $request)
+    {
+        if($request->ajax()){
+            $data = $request->all();
+            //echo '<pre></pre>'; print_r($data);die;
+            $productAttrPrice = ProductsAttribute::where(['product_id' => $data['product_id'],'size' => $data['size']])->first();
+            return $productAttrPrice->price;
+        }
+    }
 }

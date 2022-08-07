@@ -6,8 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Cart;
 use App\Models\ProductsAttribute;
 use Illuminate\Support\Facades\Route;
+use Session;
+use Auth;
 //use Illuminate\Pagination\Paginator;
 //use App\CustomClasses\ColectionPaginate;
 class FrontProductController extends Controller
@@ -103,7 +106,9 @@ class FrontProductController extends Controller
 
     public function detail($id)
     {
-        $productDetail = Product::with('category','brand','attributes','images')->find($id)->toArray();
+        $productDetail = Product::with(['category','brand','attributes' => function($query){
+            $query->where('status',1);
+        },'images'])->find($id)->toArray();
         //dd($productDetail);
         $total_stock = ProductsAttribute::where('product_id',$id)->sum('stock');
         $relatedProducts = Product::where('category_id',$productDetail['category']['id'])->where('id','!=',$id)->limit(3)->inRandomOrder()->get()->toArray();
@@ -119,5 +124,66 @@ class FrontProductController extends Controller
             $productAttrPrice = ProductsAttribute::where(['product_id' => $data['product_id'],'size' => $data['size']])->first();
             return $productAttrPrice->price;
         }
+    }
+
+    public function addToCart(Request $request)
+    {
+        if($request->isMethod('post')){
+            $data = $request->all();
+            //echo '<pre></pre>'; print_r($data); die;
+
+            //check product stock is available or not
+            $getProductStock = ProductsAttribute::where(['product_id' =>$data['product_id'],'size' => $data['size']])->first()->toArray();
+            //echo $getProductStock['stock']; die;
+            if($getProductStock['stock'] < $data['quantity']){//cart icinde secilen mehsul yoxdusa ,sifira beraber
+                $message = 'Required quantity is not avaliable';
+                session::flash('error_message',$message);
+                return redirect()->back();
+            }
+
+            //generate session id if not exists
+            $session_id = Session::get('session_id');
+            if(empty($session_id)){
+                $session_id = Session::getId();
+                Session::put('session_id',$session_id);
+            }
+
+            if(Auth::check()){
+                //user is logged
+                $countProduct = Cart::where(['product_id' =>$data['product_id'],'size' => $data['size'],'user_id' => Auth::user()->id])->count();
+            }else{
+                //user is not logged
+                $countProduct = Cart::where(['product_id' =>$data['product_id'],'size' => $data['size'],'session_id' => Session::get('session_id')])->count();
+            }
+
+            //check product if already exists in cart
+            //$Cart = ProductsAttribute::where(['product_id' =>$data['product_id'],'size' => $data['size']])->count();
+            if($countProduct > 0){
+                $message = 'Product already exists in cart';
+                session::flash('error_message',$message);
+                return redirect()->back();
+            }
+
+            //add to cart 
+            $cart = new Cart;
+            if($cart['user_id'] == ''){
+                $cart->user_id =0;
+            }
+            $cart->session_id = $session_id;
+            $cart->product_id = $data['product_id'];
+            $cart->quantity = $data['quantity'];
+            $cart->size = $data['size'];
+            $cart->save();
+            $message = 'Product has been added in cart successfully';
+            session::flash('success',$message);
+            return redirect()->back();
+        }
+    }
+
+    public function cart()
+    {
+        $userCartItems = Cart::userCartItem();
+        //echo '<pre>'; print_r($userCartItems); die;
+        return view('front.cart.cart')->with(compact('userCartItems'));
     }
 }

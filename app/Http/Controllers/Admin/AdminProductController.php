@@ -288,8 +288,8 @@ class AdminProductController extends Controller
                     $productAttribute->product_id = $id;
                     $productAttribute->sku = $value;
                     $productAttribute->price = $data['price'][$key];
-                    $productAttribute->size = $data['price'][$key];
-                    $productAttribute->stock = $data['price'][$key];
+                    $productAttribute->size = $data['size'][$key];
+                    $productAttribute->stock = $data['stock'][$key];
                     $productAttribute->status = 1;
                     $productAttribute->save();
                 }

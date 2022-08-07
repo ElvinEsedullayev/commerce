@@ -39,11 +39,30 @@
 					</div>
 				</div>
 				<div class="span6">
+					 @if(Session::has('error_message'))
+      <div class="alert alert-danger" role="alert">
+      <strong>Error!</strong> {{Session::get('error_message')}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+      @endif
+
+			@if(Session::has('success'))
+      <div class="alert alert-success" role="alert">
+      <strong>Success!</strong> {{Session::get('success')}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+      @endif
 					<h3>{{$productDetail['product_name']}}  </h3>
 					<small>- {{$productDetail['brand']['name']}}</small>
 					<hr class="soft"/>
 					<small>{{$total_stock}} items in stock</small>
-					<form class="form-horizontal qtyFrm">
+					<form action="{{url('/add-to-cart')}}" method="post" class="form-horizontal qtyFrm">
+						@csrf
+						<input type="hidden" name="product_id" id="" value="{{$productDetail['id']}}">
 						<div class="control-group">
 							<h4 class="getAttrPrice">Rs.{{$productDetail['product_price']}}</h4>
 								<select name="size" id="getPrice" product-id="{{$productDetail['id']}}" class="span2 pull-left">
@@ -52,7 +71,7 @@
 									<option value="{{$attr['size']}}">{{$attr['size']}}</option>
 									@endforeach
 								</select>
-								<input type="number" class="span1" placeholder="Qty."/>
+								<input type="number" name="quantity" class="span1" placeholder="Qty."/>
 								<button type="submit" class="btn btn-large btn-primary pull-right"> Add to cart <i class=" icon-shopping-cart"></i></button>
 							</div>
 						</div>

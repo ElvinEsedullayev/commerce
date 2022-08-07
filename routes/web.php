@@ -111,6 +111,11 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
 
     //get product price
     Route::post('/get-product-price','FrontProductController@productPrice');
+
+    //add to cart
+    Route::post('/add-to-cart','FrontProductController@addToCart');
+    //get cart page
+    Route::get('/cart','FrontProductController@cart');
 });
 
 

@@ -1,3 +1,6 @@
+@php
+		use App\Models\Product;
+@endphp
 @extends('front.layouts.master')
 @section('content')
 	<div class="span9">
@@ -25,7 +28,21 @@
 												</a>
 												<div class="caption">
 													<h5>{{$item['product_name']}}</h5>
-													<h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">Rs.{{$item['product_price']}}</span></h4>
+														@php
+															$discount_price = Product::getDiscountedProduct($item['id']);
+														@endphp
+													<h4><a class="btn" href="product_details.html">VIEW</a>
+														
+														<span class="pull-right" style="font-size: 14px;">
+															@if($discount_price > 0) 
+															<del>$.{{$item['product_price']}}</del>
+															<font color="red">&nbsp;$.{{$discount_price}}</font>
+															@else 
+														<span class="pull-right">$.{{$item['product_price']}}</span>
+														@endif
+														</span>
+														
+													</h4>
 												</div>
 											</div>
 										</li>
@@ -61,7 +78,20 @@
 									{{$product['product_code']}} {{$product['product_color']}}
 								</p>
 								
-								<h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">$.{{$product['product_price']}}</a></h4>
+								<h4 style="text-align:center">
+									@php
+											$discount_price = Product::getDiscountedProduct($product['id']);
+									@endphp
+									{{-- <a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a>  --}}
+									<a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> 
+									<a class="btn btn-primary" href="#">
+										@if($discount_price > 0)
+										<del>$.{{$product['product_price']}}</del>
+										<font color="yellow">&nbsp; $.{{$discount_price}}</font>
+										@else 
+										$.{{$product['product_price']}}
+										@endif
+									</a></h4>
 							</div>
 						</div>
 					</li>

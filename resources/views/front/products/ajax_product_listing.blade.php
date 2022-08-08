@@ -1,3 +1,6 @@
+	@php
+			use App\Models\Product;
+	@endphp
 	<div class="tab-pane  active" id="blockView">
 					<ul class="thumbnails">
             @foreach($categoryProduct as $product)
@@ -24,15 +27,32 @@
 										{{-- {{$product['brand']['name']}} --}}
 										{{$product['description']}}
 									</p>
-									<h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">Rs.{{$product['product_price']}}</a></h4>
-									<p>
+									@php
+											$discount_price = Product::getDiscountedProduct($product['id']);
+									@endphp
+									<h4 style="text-align:center">
+										{{-- <a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> --}}
+										 <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> 
+										<a class="btn btn-primary" href="#">
+											@if($discount_price > 0)
+											<del>$.{{$product['product_price']}}</del>
+											<font color="yellow">&nbsp;$.{{$discount_price}}</font>
+											@else 
+											$.{{$product['product_price']}}
+											@endif
+										</a>
+									</h4>
+									{{-- @if($discount_price > 0)
+									<h4><font color="red">Discount Price : {{$discount_price}}</font></h4>
+									@endif --}}
+								
 										{{-- {{$product['brand']['name']}} --}}
 										{{-- {{$product['fabric']}} <br>
 										{{$product['sleeve']}} <br>
 										{{$product['pattern']}} <br>
 										{{$product['fit']}} <br>
 										{{$product['occasion']}} <br> --}}
-									</p>
+								
 								</div>
 							</div>
 						</li>

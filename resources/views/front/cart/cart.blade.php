@@ -1,5 +1,6 @@
 @php
 	use App\Models\Cart;	
+	use App\Models\Product;	
 @endphp
 @extends('front.layouts.master')
 @section('content')
@@ -41,72 +42,21 @@
 		  </td>
 		  </tr>
 	</table>		
-			
-	<table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th>Product</th>
-                  <th>Description</th>
-                  <th>Quantity/Update</th>
-				  <th>Price</th>
-                  <th>Discount</th>
-                  <th>Tax</th>
-                  <th>Sub Total</th>
-				</tr>
-              </thead>
-              <tbody>
-								@php
-										$total_price = 0;
-								@endphp
-								@foreach($userCartItems as $item)
-								@php
-										$getAttributePrice = Cart::getAttributePrice($item['product_id'],$item['size']);
-								@endphp
-                <tr>
-										<td> <img width="60" src="{{asset('front/images/products/small/'.$item['product']['product_image'])}}" alt=""/></td>
-										<td colspan="2">{{$item['product']['product_name']}} {{$item['product']['product_code']}}<br/>Color : {{$item['product']['product_color']}}<br>
-										Size : {{$item['size']}}</td>
-										<td>
-										<div class="input-append">
-											<input class="span1" name="quantity" value="{{$item['quantity']}}" style="max-width:34px" placeholder="1" id="appendedInputButtons" size="16" type="text">
-											<button class="btn" type="button"><i class="icon-minus"></i></button>
-											<button class="btn" type="button"><i class="icon-plus"></i></button>
-											<button class="btn btn-danger" type="button"><i class="icon-remove icon-white"></i></button>				
-										</div>
-										</td>
-										<td>Rs.{{$getAttributePrice}}</td>
-										<td>Rs.0.00</td>
-										<td>Rs.0.00</td>
-										<td>Rs.{{$getAttributePrice * $item['quantity']}}</td>
-                </tr>
-								@php
-										$total_price = $total_price + ($getAttributePrice * $item['quantity']);
-								@endphp
-								@endforeach
-
-								
-				
-                <tr>
-                  <td colspan="6" style="text-align:right">Total Price:	</td>
-                  <td> Rs.{{$total_price}}</td>
-                </tr>
-				 <tr>
-                  <td colspan="6" style="text-align:right">Total Discount:	</td>
-                  <td> Rs.0.00</td>
-                </tr>
-                 <tr>
-                  <td colspan="6" style="text-align:right">Total Tax:	</td>
-                  <td> Rs.0.00</td>
-                </tr>
-				 <tr>
-                  <td colspan="6" style="text-align:right"><strong>GRAND TOTAL (Rs.{{$total_price}} - Rs.0 + Rs.0) =</strong></td>
-                  <td class="label label-important" style="display:block"> <strong> Rs.{{$total_price}} </strong></td>
-                </tr>
-				</tbody>
-            </table>
+			@if(Session::has('success'))
+      <div class="alert alert-success" role="alert">
+      <strong>Success!</strong> {{Session::get('success')}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+      @endif
+			<div id="AppendCartItems">
+				@include('front.cart.cart_item')
+			</div>
+	
 		
 		
-            <table class="table table-bordered">
+    <table class="table table-bordered">
 			<tbody>
 				 <tr>
                   <td> 
@@ -123,7 +73,7 @@
                 </tr>
 				
 			</tbody>
-			</table>
+		</table>
 			
 			<!-- <table class="table table-bordered">
 			 <tr><th>ESTIMATE YOUR SHIPPING </th></tr>

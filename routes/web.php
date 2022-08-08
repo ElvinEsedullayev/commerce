@@ -116,6 +116,8 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     Route::post('/add-to-cart','FrontProductController@addToCart');
     //get cart page
     Route::get('/cart','FrontProductController@cart');
+    //update cart item qty
+    Route::post('update-cart-item-qty','FrontProductController@cartItemUpdateQty');
 });
 
 

@@ -42,4 +42,39 @@ class Product extends Model
         $productFilters['occasionArray'] = array('Casual','Formal');
         return $productFilters;
     }
+
+    public static function getDiscountedProduct($product_id)
+    {
+        $proDetail = Product::select('category_id','product_discount','product_price')->where('id',$product_id)->first()->toArray();
+        $catDetail = Category::select('discount')->where('id',$proDetail['category_id'])->first()->toArray();
+        if($proDetail['product_discount'] > 0){
+            $discountPrice = $proDetail['product_price'] - ($proDetail['product_price'] * $proDetail['product_discount'] / 100);
+        }else if($catDetail['discount'] > 0){
+            $discountPrice = $proDetail['product_price'] - ($proDetail['product_price'] * $catDetail['discount'] / 100);
+        }else{
+            $discountPrice = 0;
+        }
+        return $discountPrice;
+    }
+
+    public static function getDiscountAttrPrice($product_id,$size)
+    {
+        $attrProDetail = ProductsAttribute::where(['product_id' => $product_id, 'size' => $size])->first()->toArray();
+        $proDetail = Product::select('category_id','product_discount')->where('id',$product_id)->first()->toArray();
+        $catDetail = Category::select('discount')->where('id',$proDetail['category_id'])->first()->toArray();
+
+        if($proDetail['product_discount'] > 0){
+            $discountPrice = $attrProDetail['price'] - ($attrProDetail['price'] * $proDetail['product_discount'] / 100);
+            $discount = $attrProDetail['price'] - $discountPrice;
+        }else if($catDetail['discount'] > 0){
+            $discountPrice = $attrProDetail['price'] - ($attrProDetail['price'] * $catDetail['discount'] / 100);
+            $discount = $attrProDetail['price'] - $discountPrice;
+        }else{
+            $discountPrice = $attrProDetail['price'];
+            $discount = 0;
+        }
+        //return $discountPrice;
+        return array('price' => $attrProDetail['price'], 'discount_price' => $discountPrice,'discount' => $discount);
+    }
+    
 }

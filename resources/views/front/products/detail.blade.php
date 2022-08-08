@@ -1,3 +1,6 @@
+@php
+		use App\Models\Product;
+@endphp
 @extends('front.layouts.master')
 @section('content')
 <div class="span9">
@@ -64,7 +67,16 @@
 						@csrf
 						<input type="hidden" name="product_id" id="" value="{{$productDetail['id']}}">
 						<div class="control-group">
-							<h4 class="getAttrPrice">Rs.{{$productDetail['product_price']}}</h4>
+							@php
+									$discount_price = Product::getDiscountedProduct($productDetail['id']);
+							@endphp
+							<h4 class="getAttrPrice">
+								@if($discount_price > 0)
+								<del>$.{{$productDetail['product_price']}}</del> $.{{$discount_price}}
+								@else 
+								$.{{$productDetail['product_price']}}
+								@endif
+							</h4>
 								<select name="size" id="getPrice" product-id="{{$productDetail['id']}}" class="span2 pull-left">
 									<option value="">Select Size</option>
 									@foreach($productDetail['attributes'] as $attr)
@@ -165,7 +177,7 @@
 										</div>
 										<div class="span3 alignR">
 											<form class="form-horizontal qtyFrm">
-												<h3> Rs.{{$product['product_price']}}</h3>
+												<h3> $.{{$product['product_price']}}</h3>
 												<label class="checkbox">
 													<input type="checkbox">  Adds product to compair
 												</label><br/>
@@ -205,7 +217,7 @@
 													<p>
 														{{$product['product_code']}}
 													</p>
-													<h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">Rs.{{$product['product_price']}}</a></h4>
+													<h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">$.{{$product['product_price']}}</a></h4>
 												</div>
 											</div>
 										</li>

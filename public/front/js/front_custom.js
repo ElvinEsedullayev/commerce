@@ -145,12 +145,58 @@ $(document).ready(function() {
             type:'post',
             data:{size:size,product_id:product_id},
             success:function(resp){
-                $('.getAttrPrice').html('Rs.'+resp);
+                //alert(resp['product_price']); 
+                //alert(resp['discount_price']);
+                //return false;
+                if(resp['discount'] > 0){
+                    $('.getAttrPrice').html('<del>Rs.'+resp['price']+'</del> Rs.'+resp['discount_price']);
+                }else{
+                    $('.getAttrPrice').html('Rs.'+resp);
+                }
+                
             },
             error:function(){
                 alert('Error');
             }
         });
+    });
+
+    //cart item update
+    $(document).on('click','.btnItemUpdate',function(){
+        if($(this).hasClass('qtyMinus')){
+            var quantity = $(this).prev().val();
+            //alert(quantity);
+            //return false;
+            if(quantity <=1){
+                alert('Item quantity must be 1 or greater!');
+                return false;
+            }else{
+                new_qty = parseInt(quantity) - 1;
+            }
+        }
+        if($(this).hasClass('qtyPlus')){
+            var quantity = $(this).prev().prev().val();
+            //alert(quantity); return false;
+            new_qty = parseInt(quantity) + 1;
+        }
+        //alert(new_qty);
+        var cartid = $(this).data('cartid');
+        //alert(cartid);
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url:'/update-cart-item-qty',
+            data:{"cartid":cartid,"qty":new_qty},
+            type:'post',
+            success:function(resp){
+                //alert(resp);
+                $('#AppendCartItems').html(resp.view);
+            },
+            error:function(){
+                //alert('Error');
+            }
+        })
     });
 
 });

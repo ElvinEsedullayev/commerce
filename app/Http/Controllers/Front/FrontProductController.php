@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Front;
 
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Cart;
 use App\Models\ProductsAttribute;
-use Illuminate\Support\Facades\Route;
 use Session;
 use Auth;
 //use Illuminate\Pagination\Paginator;
@@ -121,8 +122,10 @@ class FrontProductController extends Controller
         if($request->ajax()){
             $data = $request->all();
             //echo '<pre></pre>'; print_r($data);die;
-            $productAttrPrice = ProductsAttribute::where(['product_id' => $data['product_id'],'size' => $data['size']])->first();
-            return $productAttrPrice->price;
+            //$productAttrPrice = ProductsAttribute::where(['product_id' => $data['product_id'],'size' => $data['size']])->first();
+            $getDiscountAttrPrice = Product::getDiscountAttrPrice($data['product_id'],$data['size']);
+            //return $productAttrPrice->price;
+            return $getDiscountAttrPrice;
         }
     }
 
@@ -176,7 +179,7 @@ class FrontProductController extends Controller
             $cart->save();
             $message = 'Product has been added in cart successfully';
             session::flash('success',$message);
-            return redirect()->back();
+            return redirect('cart');
         }
     }
 
@@ -185,5 +188,16 @@ class FrontProductController extends Controller
         $userCartItems = Cart::userCartItem();
         //echo '<pre>'; print_r($userCartItems); die;
         return view('front.cart.cart')->with(compact('userCartItems'));
+    }
+
+    public function cartItemUpdateQty(Request $request)
+    {
+        if($request->ajax()){
+            $data = $request->all();
+            //echo '<pre>'; print_r($data); die;
+            Cart::where('id',$data['cartid'])->update(['quantity' => $data['qty']]);
+            $userCartItems = Cart::userCartItem();
+            return response()->json(['view' => (String)View::make('front.cart.cart_item')->with(compact('userCartItems'))]);
+        }
     }
 }

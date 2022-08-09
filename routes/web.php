@@ -118,6 +118,8 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     Route::get('/cart','FrontProductController@cart');
     //update cart item qty
     Route::post('update-cart-item-qty','FrontProductController@cartItemUpdateQty');
+    //delete cart item qty
+    Route::post('delete-cart-item','FrontProductController@cartItemDelete');
 });
 
 

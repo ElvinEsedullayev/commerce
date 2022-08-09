@@ -191,12 +191,40 @@ $(document).ready(function() {
             type:'post',
             success:function(resp){
                 //alert(resp);
+                //alert(resp.status);
+                if(resp.status == false){
+                    alert(resp.message);
+                }
                 $('#AppendCartItems').html(resp.view);
             },
             error:function(){
                 //alert('Error');
             }
         })
+    });
+
+    //cart item delete
+    $(document).on('click','.btnItemDelete',function(){
+        var cartid = $(this).data('cartid');
+        //alert(cartid);
+        var result = confirm('Want to delete this cart item?');
+        if(result){
+            $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url:'/delete-cart-item',
+            data:{"cartid":cartid},
+            type:'post',
+            success:function(resp){
+                $('#AppendCartItems').html(resp.view);
+            },
+            error:function(){
+                //alert('Error');
+            }
+        });
+        }
+        
     });
 
 });

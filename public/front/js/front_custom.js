@@ -227,4 +227,116 @@ $(document).ready(function() {
         
     });
 
+    // validate signup form on keyup and submit
+        $("#registerForm").validate({
+            rules: {
+                name: "required",
+                mobile: {
+                    required: true,
+                    minlength: 10,
+                    maxlenght: 10,
+                    digits: true
+                },
+                
+              
+                email: {
+                    required: true,
+                    email: true,
+                    remote: "check-email"
+                },
+                password: {
+                    required: true,
+                    minlength: 5
+                },
+              
+            },
+            messages: {
+                name: "Please enter your name",
+    
+                mobile: {
+                    required: "Please enter your mobile",
+                    minlength: "Your mobile must consist of 10 digits",
+                    maxlength: "Your mobile must consist of 10 digits",
+                    digits: "Please enter your valid mobile"
+                },
+                email: {
+                    required: "Please enter your email",
+                    email: "Please enter your valid email",
+                    remote: "Email already exists"
+                },
+                password: {
+                    required: "Please choose your password",
+                    minlength: "Your password must be at least 5 characters long"
+                },
+                
+              
+            }
+        });
+
+        // validate login form on keyup and submit
+        $("#loginForm").validate({
+            rules: {
+
+              
+                email: {
+                    required: true,
+                    email: true,
+
+                },
+                password: {
+                    required: true,
+                    minlength: 5
+                },
+              
+            },
+            messages: {
+
+                email: {
+                    required: "Please enter your email",
+                    email: "Please enter your valid email",
+
+                },
+                password: {
+                    required: "Please choose your password",
+                    minlength: "Your password must be at least 5 characters long"
+                },
+                
+              
+            }
+        });
+
+        // validate account form on keyup and submit
+        $("#accountForm").validate({
+            alert('salam');
+            rules: {
+                name: {
+                    required: true,
+                    accept: "[a-zA-Z]+",
+                },
+                mobile: {
+                    required: true,
+                    minlength: 10,
+                    maxlenght: 10,
+                    digits: true
+                },
+                
+              
+            },
+            messages: {
+                name: {
+                    required: "Please enter your name",
+                    accept: "Please enter valid name",
+                },
+    
+                mobile: {
+                    required: "Please enter your mobile",
+                    minlength: "Your mobile must consist of 10 digits",
+                    maxlength: "Your mobile must consist of 10 digits",
+                    digits: "Please enter your valid mobile"
+                },
+                
+              
+            }
+        });
+
 });

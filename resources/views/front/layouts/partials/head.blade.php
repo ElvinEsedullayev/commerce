@@ -20,4 +20,10 @@
 	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{url('front/images/ico/apple-touch-icon-72-precomposed.png')}}">
 	<link rel="apple-touch-icon-precomposed" href="{{url('front/images/ico/apple-touch-icon-57-precomposed.png')}}">
 	<style type="text/css" id="enject"></style>
+	<style>
+		form.cmxform label.error, label.error{
+			color: red;
+			font-style: italic;
+		}
+	</style>
 </head>

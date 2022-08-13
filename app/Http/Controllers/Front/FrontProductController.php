@@ -159,6 +159,11 @@ class FrontProductController extends Controller
                 $countProduct = Cart::where(['product_id' =>$data['product_id'],'size' => $data['size'],'session_id' => Session::get('session_id')])->count();
             }
 
+            if(Auth::check()){
+                $user_id = Auth::user()->id;
+            }else{
+                $user_id = 0;
+            }
             //check product if already exists in cart
             //$Cart = ProductsAttribute::where(['product_id' =>$data['product_id'],'size' => $data['size']])->count();
             if($countProduct > 0){
@@ -169,9 +174,10 @@ class FrontProductController extends Controller
 
             //add to cart 
             $cart = new Cart;
-            if($cart['user_id'] == ''){
-                $cart->user_id =0;
-            }
+            // if($cart['user_id'] == ''){
+            //     $cart->user_id =0;
+            // }
+            $cart->user_id = $user_id;
             $cart->session_id = $session_id;
             $cart->product_id = $data['product_id'];
             $cart->quantity = $data['quantity'];

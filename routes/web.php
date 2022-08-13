@@ -8,7 +8,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+//Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -120,6 +120,19 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     Route::post('update-cart-item-qty','FrontProductController@cartItemUpdateQty');
     //delete cart item qty
     Route::post('delete-cart-item','FrontProductController@cartItemDelete');
+
+    //login-register page
+    Route::get('/login-register','FrontUserController@login_register');
+    //login 
+    Route::post('/login','FrontUserController@userLogin');
+    //register
+    Route::post('/register','FrontUserController@registerUser');
+    //logout
+    Route::get('/logout','FrontUserController@userLogout');
+    //check email
+    Route::match(['get', 'post'], 'check-email', 'FrontUserController@checkEmail');
+    //account
+    Route::match(['get','post'],'account','FrontUserController@account');
 });
 
 
